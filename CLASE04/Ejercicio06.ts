@@ -10,7 +10,7 @@ function filtrarElementos<T>(arreglo: T[]): string[] {
       if (typeof elemento === 'string') {  //Condición para que sea extrictamente a string
         const cadena = elemento as string;
         cadenas.push(cadena);
-        console.log(`Cadena encontrada: ${cadena}, Longitud: ${cadena.length}`);
+        console.log(`Cadena encontrada: ${cadena}`);
       };
     };
     return cadenas;
