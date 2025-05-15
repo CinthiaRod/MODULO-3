@@ -1,78 +1,53 @@
-// Ejercicio 8: Sistema de Reserva de Hotel
-// Consigna: Crea un sistema para gestionar las reservas de un hotel. 
-// Define una clase base Cliente con propiedades privadas como nombre, numeroHabitacion, y un método reservar().
-class Cliente {
+// 8. Ejercicio de Empleado
+// Crea una clase Empleado que contenga propiedades privadas para nombre, salario, y departamento.
+class Empleado {
     private nombre: string;
-    private numeroHabitacion: number;
-  
-    constructor(nombre: string, numeroHabitacion: number) {
-      this.nombre = nombre;
-      this.numeroHabitacion = numeroHabitacion;
-    };
-  
-    public getNombre(): string {
-      return this.nombre;
-    };
-  
-    public getNumeroHabitacion(): number {
-      return this.numeroHabitacion;
-    };
-  
-    protected reservar(): void {
-      console.log(`\n${this.nombre} ha reservado la habitación número ${this.numeroHabitacion}.`);
-    };
-  };
+    private salario: number;
+    private departamento: string;
 
-//  Adicionalmente, crea una interfaz Beneficios con un método accederBeneficios(). 
-// Ambas clases derivadas deben implementar esta interfaz.
-interface Beneficios {
-    accederBeneficios(): void;
-  };
-
-// Luego, crea dos clases derivadas ClientePremium y ClienteCorporativo que sobrescriban el método reservar() para añadir funcionalidades adicionales.
-/// En la clase ClientePremium, el cliente podrá acceder al spa y desayuno gratis, y en la clase ClienteCorporativo, 
-// el cliente podrá acceder a salas de reuniones y descuentos.
-
-class ClientePremium extends Cliente implements Beneficios {
-    constructor(nombre: string, numeroHabitacion: number) {
-      super(nombre, numeroHabitacion);
-    }
-  
-    reservar(): void {
-      super.reservar();
-      console.log(`\n${this.getNombre()} su habitación fue reservada correctamente.`);
+    constructor(nombre: string, salario: number, departamento: string) {
+        this.nombre = nombre;
+        this.salario = salario;
+        this.departamento = departamento;
     };
-  
-    accederBeneficios(): void {
-      console.log(`Accedió a los beneficios Premium: spa y desayuno.`);
+
+// Implementa métodos para cambiar el salario (que no puede ser menor a 0) y obtener la información del empleado.
+// Si se intenta establecer un salario negativo, imprime un mensaje indicativo.
+cambiarSalario(nuevoSalario: number): void {
+    if (nuevoSalario < 0) {
+        console.log("El salario no puede ser un valor menor a 0.");
+        return;
     };
-  };
-  
-  class ClienteCorporativo extends Cliente implements Beneficios {
-    constructor(nombre: string, numeroHabitacion: number) {
-      super(nombre, numeroHabitacion);
+    this.salario = nuevoSalario;
+    console.log(`El salario de ${this.nombre} ha sido actualizado a $${this.salario}.`);
+};
+
+obtenerInformacion(): { nombre: string; salario: number; departamento: string } {
+    return {
+        nombre: this.nombre,
+        salario: this.salario,
+        departamento: this.departamento
     };
-  
-    reservar(): void {
-      super.reservar();
-      console.log(`\n${this.getNombre()} su habitación fue reservada correctamente.`);
-    };
-  
-    accederBeneficios(): void {
-      console.log(`Accedió a los beneficios Corporativos: salas de reuniones y descuentos.`);
-    };
-  };
+};
 
-//Ejemplo de uso 
-const clientePremium = new ClientePremium("Felipe Samaniego", 128);
-const clienteCorporativo = new ClienteCorporativo("Rafael Rodriguez", 225);
+mostrarInformacion(): void {
+    const info = this.obtenerInformacion();
+    console.log(`Nombre: ${info.nombre} -- Salario: $${info.salario}`);
+    console.log(`Departamento: ${info.departamento}`);
+};
+};
 
-clientePremium.reservar();
-clientePremium.accederBeneficios();
+// Ejemplo de uso
+const empleado1 = new Empleado("Cinthia Rodriguez", 30000, "Administración");
+const empleado2 = new Empleado("Felipe Samaniego", 43000, "TI");
 
-clienteCorporativo.reservar();
-clienteCorporativo.accederBeneficios();
+empleado1.mostrarInformacion();
+empleado2.mostrarInformacion();
 
+empleado1.cambiarSalario(30850);
+empleado1.mostrarInformacion();
 
-
+empleado2.cambiarSalario(-100); // Salario negativo
+empleado2.cambiarSalario(45500);
+empleado2.mostrarInformacion();
 
